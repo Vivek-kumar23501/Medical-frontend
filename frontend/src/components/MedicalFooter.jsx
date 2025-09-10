@@ -1,80 +1,72 @@
 // src/components/MedicalFooter.jsx
 import React from "react";
+import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaHeart,
+} from "react-icons/fa";
 
 const MedicalFooter = () => {
   return (
-    <footer className="bg-light text-dark py-5 mt-5 border-top">
-      <div className="container">
-        <div className="row text-center text-md-start">
-          {/* Brand & Description */}
-          <div className="col-md-3 col-sm-6 mb-4">
-            <h5 className="fw-bold text-primary">HaiDoc</h5>
-            <p className="small">
-              Your trusted medical partner. <br />
-              We care for you and your family.
-            </p>
-            <div className="d-flex justify-content-center justify-content-md-start gap-3">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <FaFacebookF size={18} />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <FaTwitter size={18} />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <FaInstagram size={18} />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <FaLinkedin size={18} />
-              </a>
+    <footer className="bg-light text-dark pt-5 pb-3">
+      <Container>
+        <Row>
+          {/* Left Side - Logo & Socials */}
+          <Col md="3" className="mb-4">
+            <h4 className="text-primary fw-bold">HaiDoc</h4>
+            <p>Your trusted medical partner. <br /> We care for you and your family.</p>
+            <div className="d-flex gap-3 mt-3">
+              <Link to="/facebook" className="text-primary fs-5"><FaFacebook /></Link>
+              <Link to="/twitter" className="text-primary fs-5"><FaTwitter /></Link>
+              <Link to="/instagram" className="text-primary fs-5"><FaInstagram /></Link>
+              <Link to="/linkedin" className="text-primary fs-5"><FaLinkedin /></Link>
             </div>
-          </div>
+          </Col>
 
-          {/* Services */}
-          <div className="col-md-3 col-sm-6 mb-4">
+          {/* Our Services */}
+          <Col md="3" className="mb-4">
             <h6 className="fw-bold mb-3">Our Services</h6>
-            <ul className="list-unstyled mb-0">
-              <li><Link to="/appointments" className="text-dark text-decoration-none">Book Appointment</Link></li>
+            <ul className="list-unstyled">
+              <li><Link to="/book" className="text-dark text-decoration-none">Book Appointment</Link></li>
               <li><Link to="/departments" className="text-dark text-decoration-none">Departments</Link></li>
               <li><Link to="/doctors" className="text-dark text-decoration-none">Find a Doctor</Link></li>
               <li><Link to="/emergency" className="text-dark text-decoration-none">Emergency Care</Link></li>
             </ul>
-          </div>
+          </Col>
 
           {/* Patient Resources */}
-          <div className="col-md-3 col-sm-6 mb-4">
+          <Col md="3" className="mb-4">
             <h6 className="fw-bold mb-3">Patient Resources</h6>
-            <ul className="list-unstyled mb-0">
-              <li><Link to="/faq" className="text-dark text-decoration-none">FAQs</Link></li>
+            <ul className="list-unstyled">
+              <li><Link to="/faqs" className="text-dark text-decoration-none">FAQs</Link></li>
               <li><Link to="/health-tips" className="text-dark text-decoration-none">Health Tips</Link></li>
               <li><Link to="/insurance" className="text-dark text-decoration-none">Insurance Info</Link></li>
               <li><Link to="/support" className="text-dark text-decoration-none">Support</Link></li>
             </ul>
-          </div>
+          </Col>
 
-          {/* About */}
-          <div className="col-md-3 col-sm-6 mb-4">
+          {/* About Us */}
+          <Col md="3" className="mb-4">
             <h6 className="fw-bold mb-3">About Us</h6>
-            <ul className="list-unstyled mb-0">
-              <li><Link to="/about" className="text-dark text-decoration-none">Our Story</Link></li>
-              <li><Link to="/team" className="text-dark text-decoration-none">Our Team</Link></li>
+            <ul className="list-unstyled">
+              <li><Link to="/our-story" className="text-dark text-decoration-none">Our Story</Link></li>
+              <li><Link to="/our-team" className="text-dark text-decoration-none">Our Team</Link></li>
               <li><Link to="/careers" className="text-dark text-decoration-none">Careers</Link></li>
               <li><Link to="/contact" className="text-dark text-decoration-none">Contact</Link></li>
             </ul>
-          </div>
-        </div>
+          </Col>
+        </Row>
 
-        {/* Bottom */}
-        <div className="row">
-          <div className="col text-center mt-4">
-            <p className="mb-0 text-muted small">
-              © {new Date().getFullYear()} HaiDoc. All rights reserved.
-              <br className="d-sm-none" /> Made with ❤️ for healthcare
-            </p>
-          </div>
+        <hr />
+        <div className="text-center text-muted mt-3">
+          © 2025 HaiDoc. All rights reserved. Made with{" "}
+          <FaHeart className="text-danger" /> for healthcare
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };
