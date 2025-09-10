@@ -1,8 +1,6 @@
 // src/components/Hero.jsx
 import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-import doctorImage from "../assets/doctor.png"; // foreground person image
-import bgShape from "../assets/bg-shape.png";   // background image
 
 const Hero = () => {
   return (
@@ -51,7 +49,7 @@ const Hero = () => {
           <Col md="6" className="text-center position-relative mt-4 mt-md-0">
             {/* Background shape */}
             <img
-              src={bgShape}
+              src="/bg.png"   // ✅ from public folder
               alt="Background Shape"
               className="position-absolute top-50 start-50 translate-middle"
               style={{
@@ -63,7 +61,7 @@ const Hero = () => {
             />
             {/* Foreground doctor */}
             <img
-              src={doctorImage}
+              src="/doctor.png"   // ✅ from public folder
               alt="Doctor"
               className="img-fluid rounded-4 shadow position-relative"
               style={{
