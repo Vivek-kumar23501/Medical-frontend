@@ -1,6 +1,6 @@
 // src/components/HeroSection.jsx
 import React, { useState, useEffect } from "react";
-import CustomNavbar from "./Navbar";
+import CustomNavbar from "./MedicalNavbar";
 import {
   Container,
   Row,

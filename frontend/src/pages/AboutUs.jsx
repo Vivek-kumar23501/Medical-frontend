@@ -2,9 +2,12 @@
 import React from "react";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { FaSyringe, FaHeartbeat, FaUserMd, FaAward } from "react-icons/fa";
+import CustomNavbar from "../components/MedicalNavbar";
 
 const AboutUs = () => {
   return (
+    <>  
+    <CustomNavbar/>
     <section className="py-5 bg-light">
       <Container>
         {/* Header */}
@@ -94,6 +97,7 @@ const AboutUs = () => {
         </Row>
       </Container>
     </section>
+    </>
   );
 };
 

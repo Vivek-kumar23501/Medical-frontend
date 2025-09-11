@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Button, Input } from "reactstrap";
 
-
+import CustomNavbar from "../components/MedicalNavbar";
 const blogData = [
   {
     id: 1,
@@ -59,6 +59,8 @@ const BlogPage = () => {
     .slice(0, 6); // Show max 6 blogs
 
   return (
+    <>
+    <CustomNavbar/>
     <section className="py-5" style={{ background: "#f8fcff" }}>
       <Container>
         <div className="text-center mb-4">
@@ -119,6 +121,7 @@ const BlogPage = () => {
         `}
       </style>
     </section>
+     </>
   );
 };
 
