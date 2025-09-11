@@ -13,7 +13,9 @@ import Blogs from "./pages/Blogs";
 import LandingPage from "./pages/LandingPage";
 import ChatbotLayout from "./pages/ChatbotLayout";
 import AboutUs from "./pages/AboutUs";
-
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import MedicalDashboard from "./pages/MedicalDashboard";
 // Wrapper to handle conditional Footer
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -23,8 +25,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      {/* Navbar is always visible */}
-      <CustomNavbar />
+      
       {children}
       {/* Footer hidden only on Chatbot page */}
       {!hideFooter && <MedicalFooter />}
@@ -43,6 +44,14 @@ function App() {
           <Route path="/blog" element={<Blogs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/chatbot" element={<ChatbotLayout />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+
+
+          {/* now the time is for medical dashboard */}
+          <Route path="/medical-dashboard" element={<MedicalDashboard />} />
+
         </Routes>
       </Layout>
     </Router>

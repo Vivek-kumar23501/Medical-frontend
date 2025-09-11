@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Button, Input } from "reactstrap";
 
+
 const blogData = [
   {
     id: 1,
