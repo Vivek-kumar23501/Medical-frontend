@@ -1,5 +1,5 @@
 // src/pages/MedicalDashboard.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -15,72 +15,88 @@ import {
   Label,
 } from "reactstrap";
 import MedicalNavbar from "../components/MedicalNavbar";
+import axios from "axios";
+
+const BASE_URL = "http://localhost:5000/api/blogs"; // Backend URL
 
 const MedicalDashboard = () => {
-  const [blogs, setBlogs] = useState([
-    {
-      id: 1,
-      category: "Self Care",
-      title: "Daily Health Habits",
-      author: "Avita Jackson",
-      description:
-        "Simple daily routines can help you maintain overall well-being and prevent common illnesses.",
-      img: "/fit.jpg",
-    },
-    {
-      id: 2,
-      category: "Fitness",
-      title: "Home Workouts for Everyone",
-      author: "Dr. John Smith",
-      description:
-        "Simple exercises you can do at home to stay fit without going to the gym.",
-      img: "/home workout.png",
-    },
-  ]);
-
+  const [blogs, setBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newBlog, setNewBlog] = useState({
+    name: "",
     title: "",
-    category: "",
-    author: "",
     description: "",
-    img: "",
+    img: null,
+    imgPreview: "",
   });
 
-  // Add Blog
-  const handleAddBlog = (e) => {
-    e.preventDefault();
-    if (
-      newBlog.title.trim() &&
-      newBlog.category.trim() &&
-      newBlog.author.trim() &&
-      newBlog.description.trim() &&
-      newBlog.img.trim()
-    ) {
-      setBlogs([
-        ...blogs,
-        { ...newBlog, id: blogs.length + 1 },
-      ]);
+  // Fetch all blogs from backend
+  const fetchBlogs = async () => {
+    try {
+      const res = await axios.get(BASE_URL);
+      setBlogs(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  // Image preview handler
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
       setNewBlog({
-        title: "",
-        category: "",
-        author: "",
-        description: "",
-        img: "",
+        ...newBlog,
+        img: file,
+        imgPreview: URL.createObjectURL(file),
       });
     }
   };
 
-  // Delete Blog
-  const handleDelete = (id) => {
-    setBlogs(blogs.filter((blog) => blog.id !== id));
+  // Add blog (POST)
+  const handleAddBlog = async (e) => {
+    e.preventDefault();
+    if (!newBlog.name || !newBlog.title || !newBlog.description || !newBlog.img) {
+      alert("All fields are required!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", newBlog.name);
+    formData.append("title", newBlog.title);
+    formData.append("description", newBlog.description);
+    formData.append("image", newBlog.img); // must match multer field
+
+    try {
+      await axios.post(BASE_URL, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setNewBlog({ name: "", title: "", description: "", img: null, imgPreview: "" });
+      fetchBlogs(); // refresh list
+    } catch (err) {
+      console.log(err.response?.data || err.message);
+    }
   };
 
+  // Delete blog
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}/${id}`);
+      fetchBlogs();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Filtered blogs based on search
   const filteredBlogs = blogs.filter(
     (blog) =>
       blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blog.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blog.author.toLowerCase().includes(searchTerm.toLowerCase())
+      blog.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -89,10 +105,7 @@ const MedicalDashboard = () => {
 
       <section
         className="py-5"
-        style={{
-          background: "linear-gradient(135deg, #f8fcff, #e6f7ff)",
-          minHeight: "100vh",
-        }}
+        style={{ background: "linear-gradient(135deg, #f8fcff, #e6f7ff)", minHeight: "100vh" }}
       >
         <Container>
           {/* Header + Search */}
@@ -119,54 +132,46 @@ const MedicalDashboard = () => {
               <Row>
                 <Col md="6">
                   <FormGroup>
+                    <Label>Name</Label>
+                    <Input
+                      type="text"
+                      value={newBlog.name}
+                      onChange={(e) => setNewBlog({ ...newBlog, name: e.target.value })}
+                      required
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="6">
+                  <FormGroup>
                     <Label>Title</Label>
                     <Input
                       type="text"
                       value={newBlog.title}
-                      onChange={(e) =>
-                        setNewBlog({ ...newBlog, title: e.target.value })
-                      }
+                      onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
                       required
                     />
                   </FormGroup>
                 </Col>
-                <Col md="6">
+                <Col md="12">
                   <FormGroup>
-                    <Label>Category</Label>
+                    <Label>Upload Image</Label>
                     <Input
-                      type="text"
-                      value={newBlog.category}
-                      onChange={(e) =>
-                        setNewBlog({ ...newBlog, category: e.target.value })
-                      }
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
                       required
                     />
-                  </FormGroup>
-                </Col>
-                <Col md="6">
-                  <FormGroup>
-                    <Label>Author</Label>
-                    <Input
-                      type="text"
-                      value={newBlog.author}
-                      onChange={(e) =>
-                        setNewBlog({ ...newBlog, author: e.target.value })
-                      }
-                      required
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md="6">
-                  <FormGroup>
-                    <Label>Image URL</Label>
-                    <Input
-                      type="text"
-                      value={newBlog.img}
-                      onChange={(e) =>
-                        setNewBlog({ ...newBlog, img: e.target.value })
-                      }
-                      required
-                    />
+                    {newBlog.imgPreview && (
+                      <img
+                        src={newBlog.imgPreview}
+                        alt="Preview"
+                        style={{
+                          width: "150px",
+                          marginTop: "10px",
+                          borderRadius: "8px",
+                        }}
+                      />
+                    )}
                   </FormGroup>
                 </Col>
                 <Col md="12">
@@ -176,9 +181,7 @@ const MedicalDashboard = () => {
                       type="textarea"
                       rows="3"
                       value={newBlog.description}
-                      onChange={(e) =>
-                        setNewBlog({ ...newBlog, description: e.target.value })
-                      }
+                      onChange={(e) => setNewBlog({ ...newBlog, description: e.target.value })}
                       required
                     />
                   </FormGroup>
@@ -194,23 +197,20 @@ const MedicalDashboard = () => {
           <Row className="g-4">
             {filteredBlogs.length > 0 ? (
               filteredBlogs.map((blog) => (
-                <Col lg="4" md="6" sm="12" key={blog.id}>
+                <Col lg="4" md="6" sm="12" key={blog._id}>
                   <Card className="h-100 shadow-sm hover-effect border-0">
                     <img
-                      src={blog.img}
+                      src={`http://localhost:5000${blog.image}`}
                       alt={blog.title}
                       className="img-fluid rounded-top"
                       style={{ maxHeight: "220px", objectFit: "cover" }}
                     />
                     <CardBody>
-                      <span className="badge bg-info text-dark">{blog.category}</span>
                       <CardTitle tag="h5" className="mt-2">
                         {blog.title}
                       </CardTitle>
-                      <p className="text-muted">— {blog.author}</p>
-                      <CardText>
-                        {blog.description.substring(0, 100)}...
-                      </CardText>
+                      <p className="text-muted">— {blog.name}</p>
+                      <CardText>{blog.description.substring(0, 100)}...</CardText>
                       <div className="d-flex justify-content-between">
                         <Button color="primary" size="sm">
                           Read More
@@ -218,7 +218,7 @@ const MedicalDashboard = () => {
                         <Button
                           color="danger"
                           size="sm"
-                          onClick={() => handleDelete(blog.id)}
+                          onClick={() => handleDelete(blog._id)}
                         >
                           Delete
                         </Button>
@@ -233,7 +233,7 @@ const MedicalDashboard = () => {
           </Row>
         </Container>
 
-        {/* Custom CSS */}
+        {/* Hover Effect CSS */}
         <style>
           {`
             .hover-effect {
