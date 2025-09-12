@@ -2,8 +2,11 @@
 import React from "react";
 import { Container, Row, Col, Card, CardBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const OurMission = () => {
+  const { t } = useTranslation();
+
   return (
     <div style={{ display: "flex", alignItems: "center", background: "#f8fcff" }}>
       <Container style={{ width: "100%", marginTop: "40px" }}>
@@ -21,6 +24,7 @@ const OurMission = () => {
               }}
             >
               <CardBody>
+                {/* Title */}
                 <h2
                   style={{
                     fontSize: "2rem",
@@ -28,8 +32,10 @@ const OurMission = () => {
                     marginBottom: "1rem",
                   }}
                 >
-                  Our <span style={{ color: "#56E0E0" }}>Mission</span>
+                  {t("missionTitle")}
                 </h2>
+
+                {/* Description */}
                 <p
                   style={{
                     color: "#555",
@@ -37,10 +43,7 @@ const OurMission = () => {
                     marginBottom: "2rem",
                   }}
                 >
-                  Our platform is dedicated to making healthcare information simple, 
-                  accessible, and interactive. With AI-powered assistance and digital 
-                  solutions, we help users get reliable guidance on wellness, fitness, 
-                  and preventive healthcare.
+                  {t("missionText")}
                 </p>
 
                 {/* Link Button */}
@@ -68,7 +71,7 @@ const OurMission = () => {
                         "0 4px 15px rgba(0, 115, 153, 0.3)";
                     }}
                   >
-                    Let’s Get Started
+                    {t("getStarted")}
                   </Button>
                 </Link>
               </CardBody>

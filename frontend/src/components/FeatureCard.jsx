@@ -1,59 +1,26 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-
-const features = [
-  {
-    title: "Vaccination",
-    emoji: "💉",
-    detail:
-      "Stay updated with vaccination schedules and reminders. Our platform helps you keep track of upcoming vaccinations, provides alerts, and ensures you never miss an important dose.",
-    bg: "/vaccination.jpg",
-  },
-  {
-    title: "Disease Awareness",
-    emoji: "🦠",
-    detail:
-      "Get awareness tips and precautionary measures for diseases. We provide detailed insights, prevention guides, and awareness campaigns to protect your health.",
-    bg: "/disease awarness.jpg",
-  },
-  {
-    title: "Nutrition Tips",
-    emoji: "🍎",
-    detail:
-      "Daily nutrition and diet tips for a healthy lifestyle. Explore balanced diet plans, food suggestions, and easy tips for maintaining overall wellness.",
-    bg: "/nutrition.jpeg",
-  },
-  {
-    title: "Mental Health",
-    emoji: "🧠",
-    detail:
-      "Access resources and programs for mental well-being. Find meditation guides, stress management resources, and mental fitness exercises.",
-    bg: "/mental health.jpg",
-  },
-  {
-    title: "Fitness Program",
-    emoji: "💪",
-    detail:
-      "Personalized fitness routines and workout guidance. From beginner to advanced, our platform helps you maintain fitness with easy-to-follow programs.",
-    bg: "/yogaa.jpeg",
-  },
-  {
-    title: "Emergency Support",
-    emoji: "🚑",
-    detail:
-      "Quick access to emergency medical contacts and support. Get instant help with our emergency hotline directory and nearby hospital finder.",
-    bg: "/emergency.jpeg",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const OurSpecifications = () => {
-  const [expanded, setExpanded] = useState(Array(features.length).fill(false));
+  const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(Array(6).fill(false));
 
   const toggleReadMore = (index) => {
     const newExpanded = [...expanded];
     newExpanded[index] = !newExpanded[index];
     setExpanded(newExpanded);
   };
+
+  // ✅ Features array ab translation keys use karega
+  const features = [
+    { title: t("specs.vaccinationTitle"), emoji: "💉", detail: t("specs.vaccinationDetail"), bg: "/vaccination.jpg" },
+    { title: t("specs.diseaseTitle"), emoji: "🦠", detail: t("specs.diseaseDetail"), bg: "/disease awarness.jpg" },
+    { title: t("specs.nutritionTitle"), emoji: "🍎", detail: t("specs.nutritionDetail"), bg: "/nutrition.jpeg" },
+    { title: t("specs.mentalTitle"), emoji: "🧠", detail: t("specs.mentalDetail"), bg: "/mental health.jpg" },
+    { title: t("specs.fitnessTitle"), emoji: "💪", detail: t("specs.fitnessDetail"), bg: "/yogaa.jpeg" },
+    { title: t("specs.emergencyTitle"), emoji: "🚑", detail: t("specs.emergencyDetail"), bg: "/emergency.jpeg" },
+  ];
 
   return (
     <section className="specs-section py-5">
@@ -120,8 +87,6 @@ const OurSpecifications = () => {
             top: 10px;
             right: 15px;
           }
-
-          /* Overlay - default slide from left */
           .card-overlay {
             position: absolute;
             top: 0;
@@ -139,7 +104,6 @@ const OurSpecifications = () => {
             border-radius: 15px;
             z-index: 2;
           }
-
           .card-slide:hover {
             transform: translateY(-6px);
           }
@@ -166,8 +130,6 @@ const OurSpecifications = () => {
           .read-btn:hover {
             background: #e0f0f8;
           }
-
-          /* Mobile friendly overlay sliding from bottom */
           @media (max-width: 767px) {
             .card-overlay {
               left: 0 !important;
@@ -182,7 +144,7 @@ const OurSpecifications = () => {
       </style>
 
       <Container className="specs-container">
-        <h2 className="text-center mb-5">Our Services</h2>
+        <h2 className="text-center mb-5">{t("specs.sectionTitle")}</h2>
         <Row>
           {features.map((feature, index) => (
             <Col md="4" sm="6" className="mb-4" key={index}>
@@ -202,7 +164,7 @@ const OurSpecifications = () => {
                       : feature.detail.substring(0, 80) + "..."}
                   </p>
                   <Button className="read-btn" onClick={() => toggleReadMore(index)}>
-                    {expanded[index] ? "Read Less" : "Read More"}
+                    {expanded[index] ? t("common.readLess") : t("common.readMore")}
                   </Button>
                 </div>
               </div>

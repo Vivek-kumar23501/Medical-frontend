@@ -1,0 +1,82 @@
+{
+  "home": "HOME",
+  "about": "ABOUT US",
+  "services": "SERVICES",
+  "projects": "PROJECTS",
+  "blog": "BLOG",
+  "contact": "CONTACT US",
+  "login": "Login",
+  "passion": "PASSION FOR CARING",
+  "readMore": "READ MORE +",
+  "emergencyCases": "Emergency Cases",
+  "emergencyText": "There are many variations of passages of Lorem Ipsum available...",
+  "doctorsTimetable": "Doctors Timetable",
+  "doctorsText": "Check the availability of doctors and get proper consultation.",
+  "timetable": "TIMETABLE +",
+
+  "slider1Caption": "Genuine Commitment To Your Health",
+  "slider1Text": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+  "slider2Caption": "Your Health, Our Priority",
+  "slider2Text": "Providing the best medical support and treatments with expert care.",
+  "slider3Caption": "Caring With Passion",
+  "slider3Text": "Dedicated doctors and staff to make sure you live healthier and happier.",
+
+ "missionTitle": "Our Mission",
+"missionText": "Our platform is dedicated to making healthcare information simple, accessible, and interactive...",
+"getStarted": "Let’s Get Started",
+
+
+  "specs": {
+    "sectionTitle": "Our Services",
+    "vaccinationTitle": "Vaccination",
+    "vaccinationDetail": "Stay updated with vaccination schedules and reminders. Our platform helps you keep track of upcoming vaccinations, provides alerts, and ensures you never miss an important dose.",
+    "diseaseTitle": "Disease Awareness",
+    "diseaseDetail": "Get awareness tips and precautionary measures for diseases. We provide detailed insights, prevention guides, and awareness campaigns to protect your health.",
+    "nutritionTitle": "Nutrition Tips",
+    "nutritionDetail": "Daily nutrition and diet tips for a healthy lifestyle. Explore balanced diet plans, food suggestions, and easy tips for maintaining overall wellness.",
+    "mentalTitle": "Mental Health",
+    "mentalDetail": "Access resources and programs for mental well-being. Find meditation guides, stress management resources, and mental fitness exercises.",
+    "fitnessTitle": "Fitness Program",
+    "fitnessDetail": "Personalized fitness routines and workout guidance. From beginner to advanced, our platform helps you maintain fitness with easy-to-follow programs.",
+    "emergencyTitle": "Emergency Support",
+    "emergencyDetail": "Quick access to emergency medical contacts and support. Get instant help with our emergency hotline directory and nearby hospital finder."
+  },
+
+  "common": {
+    "readMore": "Read More",
+    "readLess": "Read Less"
+  },
+   "footer": {
+    "tagline1": "Your trusted medical partner.",
+    "tagline2": "We care for you and your family.",
+    "servicesTitle": "Our Services",
+    "bookAppointment": "Book Appointment",
+    "departments": "Departments",
+    "findDoctor": "Find a Doctor",
+    "emergencyCare": "Emergency Care",
+    "resourcesTitle": "Patient Resources",
+    "faqs": "FAQs",
+    "healthTips": "Health Tips",
+    "insuranceInfo": "Insurance Info",
+    "support": "Support",
+    "aboutTitle": "About Us",
+    "ourStory": "Our Story",
+    "ourTeam": "Our Team",
+    "careers": "Careers",
+    "contact": "Contact",
+    "rights": "All rights reserved. Made with",
+    "forHealthcare": "for healthcare"
+  },"about_title": "About Us",
+  "about_desc": "At HaiDoc, we are dedicated to improving lives through healthcare, awareness, and innovation.",
+  "who_we_are": "Who We Are",
+  "who_we_are_desc": "HaiDoc is your trusted healthcare partner. From prevention to treatment, our mission is to deliver reliable medical services, spread awareness, and support families in every step of their healthcare journey.",
+  "vaccination": "Vaccination",
+  "vaccination_desc": "We organize vaccination drives and awareness programs to safeguard communities against preventable diseases.",
+  "disease_awareness": "Disease Awareness",
+  "disease_awareness_desc": "Educating people about health risks and guiding them to live healthier, safer lives.",
+  "faculty": "Our Faculty",
+  "faculty_desc": "Experienced doctors, nurses, and medical staff committed to providing world-class healthcare services.",
+  "awards": "Awards",
+  "awards_desc": "Recognized for excellence in healthcare innovation and community service worldwide."
+
+}

@@ -13,28 +13,30 @@ import {
   CarouselControl,
   CarouselIndicators,
 } from "reactstrap";
-
-const items = [
-  {
-    src: "/medical-slider-1.avif",
-    caption: "Genuine Commitment To Your Health",
-    text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-  },
-  {
-    src: "/medical-slider-2.avif",
-    caption: "Your Health, Our Priority",
-    text: "Providing the best medical support and treatments with expert care."
-  },
-  {
-    src: "/medical-slider-3.avif",
-    caption: "Caring With Passion",
-    text: "Dedicated doctors and staff to make sure you live healthier and happier."
-  },
-];
+import { useTranslation } from "react-i18next"; // ✅ import
 
 const HeroSection = () => {
+  const { t } = useTranslation(); // ✅ hook
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+
+  const items = [
+    {
+      src: "/medical-slider-1.avif",
+      caption: t("slider1Caption"),
+      text: t("slider1Text"),
+    },
+    {
+      src: "/medical-slider-2.avif",
+      caption: t("slider2Caption"),
+      text: t("slider2Text"),
+    },
+    {
+      src: "/medical-slider-3.avif",
+      caption: t("slider3Caption"),
+      text: t("slider3Text"),
+    },
+  ];
 
   const next = () => {
     if (animating) return;
@@ -53,13 +55,12 @@ const HeroSection = () => {
     setActiveIndex(newIndex);
   };
 
-  // ✅ Auto slide every 7 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       next();
-    }, 7000); // 7000ms = 7s
+    }, 7000);
     return () => clearInterval(interval);
-  }, [activeIndex]); 
+  }, [activeIndex]);
 
   const slides = items.map((item) => {
     return (
@@ -83,11 +84,11 @@ const HeroSection = () => {
           <Container>
             <Row>
               <Col md="6">
-                <span className="badge bg-primary mb-2">PASSION FOR CARING</span>
+                <span className="badge bg-primary mb-2">{t("passion")}</span>
                 <h1 className="fw-bold display-5">{item.caption}</h1>
                 <p className="text-muted">{item.text}</p>
                 <Button color="primary" className="rounded-pill">
-                  READ MORE +
+                  {t("readMore")}
                 </Button>
               </Col>
             </Row>
@@ -127,8 +128,8 @@ const HeroSection = () => {
           <Col md="3" className="mb-3">
             <Card className="shadow text-white" style={{ backgroundColor: "#007bff" }}>
               <CardBody className="text-center">
-                <h5>Emergency Cases</h5>
-                <p>There are many variations of passages of Lorem Ipsum available...</p>
+                <h5>{t("emergencyCases")}</h5>
+                <p>{t("emergencyText")}</p>
                 <h6 className="fw-bold">
                   <i className="bi bi-telephone me-2"></i>987 654 321
                 </h6>
@@ -139,10 +140,10 @@ const HeroSection = () => {
           <Col md="3" className="mb-3">
             <Card className="shadow text-white" style={{ backgroundColor: "#003f7f" }}>
               <CardBody className="text-center">
-                <h5>Doctors Timetable</h5>
-                <p>Check the availability of doctors and get proper consultation.</p>
+                <h5>{t("doctorsTimetable")}</h5>
+                <p>{t("doctorsText")}</p>
                 <Button color="light" size="sm" className="rounded-pill">
-                  TIMETABLE +
+                  {t("timetable")}
                 </Button>
               </CardBody>
             </Card>
@@ -151,16 +152,14 @@ const HeroSection = () => {
           <Col md="3" className="mb-3">
             <Card className="shadow text-white" style={{ backgroundColor: "#3c4247ff" }}>
               <CardBody className="text-center">
-                <h5>Doctors Timetable</h5>
-                <p>Check the availability of doctors and get proper consultation.</p>
+                <h5>{t("doctorsTimetable")}</h5>
+                <p>{t("doctorsText")}</p>
                 <Button color="light" size="sm" className="rounded-pill">
-                  TIMETABLE +
+                  {t("timetable")}
                 </Button>
               </CardBody>
             </Card>
           </Col>
-
-          
         </Row>
       </Container>
     </>
