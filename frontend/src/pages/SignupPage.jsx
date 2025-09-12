@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, FormGroup, Input, Button, Label } from "reactstrap";
 import { Link } from "react-router-dom";
+import CustomNavbar from "../components/MedicalNavbar";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,8 @@ const SignupPage = () => {
   };
 
   return (
+    <> 
+    <CustomNavbar />  
     <Container fluid style={{ minHeight: "100vh", backgroundColor: "#f4f6f8" }}>
       <Row>
         {/* Left Image Section */}
@@ -150,6 +153,8 @@ const SignupPage = () => {
         </Col>
       </Row>
     </Container>
+
+    </>
   );
 };
 

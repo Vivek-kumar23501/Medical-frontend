@@ -6,6 +6,7 @@
   "blog": "BLOG",
   "contact": "CONTACT US",
   "login": "Login",
+  
   "passion": "PASSION FOR CARING",
   "readMore": "READ MORE +",
   "emergencyCases": "Emergency Cases",
@@ -16,11 +17,16 @@
 
   "slider1Caption": "Genuine Commitment To Your Health",
   "slider1Text": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+  "slider1ExtraText": "Our hospital ensures state-of-the-art facilities and round-the-clock medical attention. From preventive care to specialized treatments, your health and safety are our top priorities.",
+
   "slider2Caption": "Your Health, Our Priority",
   "slider2Text": "Providing the best medical support and treatments with expert care.",
+  "slider2ExtraText": "We combine modern technology with compassionate care, offering personalized treatment plans for every patient. Our experienced staff guides you through every step of your health journey.",
+
   "slider3Caption": "Caring With Passion",
   "slider3Text": "Dedicated doctors and staff to make sure you live healthier and happier.",
-
+  "slider3ExtraText": "From routine check-ups to emergency interventions, our dedicated team works tirelessly to ensure your well-being. We focus on holistic care, patient education, and creating a safe healing environment."
+,
  "missionTitle": "Our Mission",
 "missionText": "Our platform is dedicated to making healthcare information simple, accessible, and interactive...",
 "getStarted": "Let’s Get Started",
