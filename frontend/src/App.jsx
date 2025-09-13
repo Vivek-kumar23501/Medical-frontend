@@ -8,6 +8,7 @@ import Hero from "./components/Hero";
 import MedicalFooter from "./components/MedicalFooter";
 import FeatureCard from "./components/FeatureCard";
 import Blogs from "./pages/Blogs";
+import VaccinationForm from "./components/VaccinationForm";
 
 // Pages
 import LandingPage from "./pages/LandingPage";
@@ -46,6 +47,7 @@ function App() {
           <Route path="/chatbot" element={<ChatbotLayout />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/vaccination-form" element={<VaccinationForm />} />
 
 
 

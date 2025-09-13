@@ -1,0 +1,51 @@
+.vaccination-page {
+  display: flex;
+  min-height: calc(100vh - 120px); /* full height minus navbar + footer */
+  background-color: #f8f9fa;
+}
+
+/* Left section with full background image */
+.vaccination-left {
+  flex: 1;
+  background: url("/doctor.png") no-repeat center center; /* 👈 use your uploaded image path */
+  background-size: cover;
+}
+
+/* Right section with form */
+.vaccination-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background-color: #ffffff;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* ✅ Mobile responsive rules */
+@media (max-width: 768px) {
+  .vaccination-page {
+    flex-direction: column;
+  }
+
+  .vaccination-left {
+    display: none; /* hide image on mobile */
+  }
+
+  .vaccination-right {
+    flex: none;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .form-card {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}
