@@ -10,18 +10,65 @@ import {
 import { Mic, Image, Paperclip, Send, Menu } from "lucide-react";
 
 const ChatbotUI = () => {
-  const [messages] = useState([
+  const [messages, setMessages] = useState([
     { from: "bot", text: "Hello 👋, I am your Medical Assistant." },
-    { from: "user", text: "Hi, I want to know about my symptoms." },
-    { from: "bot", text: "Sure! Please describe your symptoms in detail." },
-    { from: "user", text: "Ok, I feel fever and headache." },
-    { from: "bot", text: "Noted! You should drink water and take rest." },
   ]);
-
+  const [input, setInput] = useState("");
+  const [file, setFile] = useState(null); // store uploaded file
   const [showLeftSidebar, setShowLeftSidebar] = useState(false);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
 
   const chatHeight = "90vh";
+
+  // Handle send
+  const handleSend = async () => {
+    if (!input.trim() && !file) return;
+
+    // Add user message
+    setMessages((prev) => [
+      ...prev,
+      { from: "user", text: input || (file ? `📎 Sent a file: ${file.name}` : "") },
+    ]);
+
+    try {
+      // Create form data for API
+      const formData = new FormData();
+      if (input) formData.append("query", input);
+      if (file) formData.append("file", file);
+
+      // API call (replace this with real govt medical API)
+      const response = await fetch(`https://api.govmedical.in/search`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      // Create bot reply (adjust to real API response)
+      const botReply = data?.disease
+        ? `🩺 Disease: ${data.disease}\n🛡️ Prevention: ${data.prevention}`
+        : "Sorry, I couldn't find details for that.";
+
+      setMessages((prev) => [...prev, { from: "bot", text: botReply }]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        { from: "bot", text: "⚠️ Error fetching data from medical database." },
+      ]);
+    }
+
+    // Reset input and file
+    setInput("");
+    setFile(null);
+  };
+
+  // File upload handler
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    if (uploadedFile) {
+      setFile(uploadedFile);
+    }
+  };
 
   return (
     <div
@@ -126,6 +173,7 @@ const ChatbotUI = () => {
                     maxWidth: "70%",
                     marginLeft: msg.from === "user" ? "auto" : "0",
                     textAlign: msg.from === "user" ? "right" : "left",
+                    whiteSpace: "pre-line",
                     fontWeight: "400",
                     padding: "0.5rem 1rem",
                     borderRadius: "12px",
@@ -150,33 +198,62 @@ const ChatbotUI = () => {
               gap: "0.5rem",
             }}
           >
+            {/* Voice button (future integration) */}
             <Button
               color="light"
               className="rounded-circle border"
               style={{ padding: "0.5rem", background: "#fff" }}
+              onClick={() => document.getElementById("voice-upload").click()}
             >
               <Mic size={20} />
             </Button>
+            <input
+              type="file"
+              accept="audio/*"
+              id="voice-upload"
+              style={{ display: "none" }}
+              onChange={handleFileUpload}
+            />
 
+            {/* Image upload */}
             <Button
               color="light"
               className="rounded-circle border"
               style={{ padding: "0.5rem", background: "#fff" }}
+              onClick={() => document.getElementById("image-upload").click()}
             >
               <Image size={20} />
             </Button>
+            <input
+              type="file"
+              accept="image/*"
+              id="image-upload"
+              style={{ display: "none" }}
+              onChange={handleFileUpload}
+            />
 
+            {/* File upload */}
             <Button
               color="light"
               className="rounded-circle border"
               style={{ padding: "0.5rem", background: "#fff" }}
+              onClick={() => document.getElementById("file-upload").click()}
             >
               <Paperclip size={20} />
             </Button>
+            <input
+              type="file"
+              id="file-upload"
+              style={{ display: "none" }}
+              onChange={handleFileUpload}
+            />
 
             <Input
               type="text"
               placeholder="Type your message..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSend()}
               className="border"
               style={{ borderRadius: "20px", background: "#fff" }}
             />
@@ -186,6 +263,7 @@ const ChatbotUI = () => {
                 backgroundColor: "#007bff",
                 border: "none",
               }}
+              onClick={handleSend}
             >
               <Send size={18} className="text-white" />
             </Button>
@@ -249,7 +327,7 @@ const ChatbotUI = () => {
   );
 };
 
-// Left sidebar content as a component
+// Left sidebar content
 const LeftSidebarContent = () => (
   <>
     <Button
@@ -293,7 +371,7 @@ const LeftSidebarContent = () => (
   </>
 );
 
-// Right sidebar content as a component
+// Right sidebar content
 const RightSidebarContent = () => (
   <div style={{ paddingTop: "60px", paddingBottom: "20px" }}>
     {/* Login button */}
@@ -369,11 +447,6 @@ const RightSidebarContent = () => (
         <li>🩺 <strong>Symptom Check</strong></li>
         <li>📅 <strong>Appointment Booked</strong></li>
       </ul>
-    </div>
-
-    {/* Add a button or action */}
-    <div className="text-center mt-4">
-      
     </div>
   </div>
 );
