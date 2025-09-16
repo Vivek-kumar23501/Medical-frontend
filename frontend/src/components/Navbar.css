@@ -1,6 +1,0 @@
-/* Extra height for Navbar */
-.custom-navbar {
-  min-height: 80px; /* Default is ~56px */
-  display: flex;
-  align-items: center; /* Keep items vertically centered */
-}

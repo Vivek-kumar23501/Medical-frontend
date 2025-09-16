@@ -5,11 +5,9 @@ import CustomNavbar from "../components/MedicalNavbar";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -19,17 +17,46 @@ const SignupPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Form submit handler
-  const handleSignup = async (e) => {
+  // Request OTP
+  const handleRequestOtp = async () => {
+    setError("");
+    setSuccess("");
+
+    if (!formData.email?.trim()) {
+      setError("Please enter your email to receive OTP.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email.trim() }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setOtpSent(true);
+        setSuccess("OTP sent to your email. Please check your inbox.");
+      } else {
+        setError(data.message || "Failed to send OTP.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Server error. Try again later.");
+    }
+  };
+
+  // Verify OTP & Signup
+  const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     const { name, email, password } = formData;
 
-    // ✅ Trim inputs + optional chaining
-    if (!name?.trim() || !email?.trim() || !password?.trim()) {
-      setError("Please fill all fields.");
+    if (!name?.trim() || !email?.trim() || !password?.trim() || !otp?.trim()) {
+      setError("All fields and OTP are required.");
       return;
     }
 
@@ -37,7 +64,12 @@ const SignupPage = () => {
       const response = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), password: password.trim() }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          password: password.trim(),
+          otp: otp.trim(),
+        }),
       });
 
       const data = await response.json();
@@ -79,7 +111,7 @@ const SignupPage = () => {
               {error && <Alert color="danger">{error}</Alert>}
               {success && <Alert color="success">{success}</Alert>}
 
-              <Form onSubmit={handleSignup}>
+              <Form onSubmit={otpSent ? handleVerifyOtp : (e) => e.preventDefault()}>
                 <FormGroup>
                   <Input
                     type="text"
@@ -88,6 +120,7 @@ const SignupPage = () => {
                     value={formData.name || ""}
                     onChange={handleChange}
                     style={{ borderRadius: "8px", borderColor: "#ccc", padding: "12px" }}
+                    disabled={otpSent} // disable after OTP sent
                   />
                 </FormGroup>
                 <FormGroup>
@@ -98,6 +131,7 @@ const SignupPage = () => {
                     value={formData.email || ""}
                     onChange={handleChange}
                     style={{ borderRadius: "8px", borderColor: "#ccc", padding: "12px" }}
+                    disabled={otpSent} // disable after OTP sent
                   />
                 </FormGroup>
                 <FormGroup>
@@ -108,17 +142,45 @@ const SignupPage = () => {
                     value={formData.password || ""}
                     onChange={handleChange}
                     style={{ borderRadius: "8px", borderColor: "#ccc", padding: "12px" }}
+                    disabled={otpSent} // disable after OTP sent
                   />
                 </FormGroup>
 
-                <Button
-                  color="primary"
-                  className="w-100 mb-2"
-                  type="submit"
-                  style={{ borderRadius: "8px", padding: "12px" }}
-                >
-                  Sign up
-                </Button>
+                {/* OTP Input */}
+                {otpSent && (
+                  <FormGroup>
+                    <Input
+                      type="text"
+                      name="otp"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      style={{ borderRadius: "8px", borderColor: "#ccc", padding: "12px" }}
+                    />
+                  </FormGroup>
+                )}
+
+                {/* Button */}
+                {!otpSent ? (
+                  <Button
+                    color="primary"
+                    className="w-100 mb-2"
+                    type="button"
+                    style={{ borderRadius: "8px", padding: "12px" }}
+                    onClick={handleRequestOtp}
+                  >
+                    Send OTP
+                  </Button>
+                ) : (
+                  <Button
+                    color="success"
+                    className="w-100 mb-2"
+                    type="submit"
+                    style={{ borderRadius: "8px", padding: "12px" }}
+                  >
+                    Verify OTP & Signup
+                  </Button>
+                )}
               </Form>
 
               <p className="text-center mt-2" style={{ color: "#555" }}>

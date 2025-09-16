@@ -14,7 +14,7 @@ import {
   FormGroup,
   Label,
 } from "reactstrap";
-import MedicalNavbar from "../components/MedicalNavbar";
+import MedicalNavbar from "../components/MedicalExpertNavbar";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:5000/api/blogs"; // Backend URL

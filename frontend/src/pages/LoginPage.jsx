@@ -38,7 +38,7 @@ const LoginPage = () => {
 
         // Redirect based on role
         if (userData.role === "medical_expert") {
-          navigate("/expert-dashboard");
+          navigate("/medical-dashboard");
         } else {
           navigate("/user-dashboard");
         }
