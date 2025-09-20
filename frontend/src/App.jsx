@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 // Components
-import CustomNavbar from "./components/Navbar";
+// import CustomNavbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MedicalFooter from "./components/MedicalFooter";
 import FeatureCard from "./components/FeatureCard";
